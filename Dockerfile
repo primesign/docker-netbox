@@ -19,7 +19,7 @@ RUN pip install gunicorn
 
 WORKDIR /opt
 
-ARG BRANCH=v2.2.2
+ARG BRANCH=v2.2.4
 ARG URL=https://github.com/digitalocean/netbox/archive/$BRANCH.tar.gz
 RUN wget -q -O - "${URL}" | tar xz \
   && mv netbox* netbox
