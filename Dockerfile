@@ -24,6 +24,8 @@ ARG URL=https://github.com/digitalocean/netbox/archive/$BRANCH.tar.gz
 RUN wget -q -O - "${URL}" | tar xz \
   && mv netbox* netbox
 
+RUN pip install django-auth-ldap
+
 WORKDIR /opt/netbox
 RUN pip install -r requirements.txt
 
