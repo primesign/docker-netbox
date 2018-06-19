@@ -1,36 +1,21 @@
-FROM python:3.6-alpine
+FROM python:3.6
 
-RUN apk add --no-cache \
-      bash \
-      build-base \
-      ca-certificates \
-      cyrus-sasl-dev \
-      graphviz \
-      jpeg-dev \
-      libffi-dev \
-      libxml2-dev \
-      libxslt-dev \
-      openldap-dev \
-      openssl-dev \
-      postgresql-dev \
-      wget
-
-RUN pip install gunicorn
+RUN apt-get update && apt-get install libldap2-dev libsasl2-dev && apt-get clean
+RUN pip install --no-cache-dir gunicorn django-auth-ldap whitenoise
 
 WORKDIR /opt
 
-ARG BRANCH=v2.3.3
+ARG BRANCH=v2.3.4
 ARG URL=https://github.com/digitalocean/netbox/archive/$BRANCH.tar.gz
 RUN wget -q -O - "${URL}" | tar xz \
   && mv netbox* netbox
 
-RUN pip install django-auth-ldap
-
 WORKDIR /opt/netbox
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY configuration.docker.py /opt/netbox/netbox/netbox/configuration.py
 COPY gunicorn_config.py /opt/netbox/
+COPY custom_wsgi.py /opt/netbox/netbox
 
 WORKDIR /opt/netbox/netbox
 
@@ -39,4 +24,4 @@ ENTRYPOINT [ "/docker-entrypoint.sh" ]
 
 EXPOSE 8001
 
-CMD ["gunicorn", "--log-level debug", "-c /opt/netbox/gunicorn_config.py", "netbox.wsgi"]
+CMD ["gunicorn", "--log-level debug", "-c /opt/netbox/gunicorn_config.py", "custom_wsgi"]
