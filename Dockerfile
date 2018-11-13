@@ -5,7 +5,7 @@ RUN pip install --no-cache-dir gunicorn django-auth-ldap whitenoise
 
 WORKDIR /opt
 
-ARG BRANCH=v2.4.4
+ARG BRANCH=v2.4.7
 ARG URL=https://github.com/digitalocean/netbox/archive/$BRANCH.tar.gz
 RUN wget -q -O - "${URL}" | tar xz \
   && mv netbox* netbox
