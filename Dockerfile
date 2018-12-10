@@ -1,6 +1,6 @@
 FROM python:3.6
 
-RUN apt-get update && apt-get install libldap2-dev libsasl2-dev && apt-get clean
+RUN apt-get update && apt-get install libldap2-dev libsasl2-dev graphviz && apt-get clean
 RUN pip install --no-cache-dir gunicorn django-auth-ldap whitenoise
 
 WORKDIR /opt
