@@ -20,6 +20,16 @@ DATABASE = {
     'PORT': os.environ.get('DB_PORT', ''),               # Database port (leave blank for default)
 }
 
+REDIS = {
+    'HOST': os.environ.get('REDIS_HOST'),
+    'PORT': os.environ.get('REDIS_PORT'),
+    'PASSWORD': '',
+    'DATABASE': 0,
+    'CACHE_DATABASE': 1,
+    'DEFAULT_TIMEOUT': 300,
+    'SSL': False,
+}
+
 # This key is used for secure generation of random numbers and strings. It must never be exposed outside of this file.
 # For optimal security, SECRET_KEY should be at least 50 characters in length and contain a mix of letters, numbers, and
 # symbols. NetBox will not run without this defined. For more information, see
