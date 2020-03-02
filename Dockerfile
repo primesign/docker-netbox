@@ -1,11 +1,11 @@
-FROM python:3.6
+FROM python:3.7
 
 RUN apt-get -y update && apt-get -y install libldap2-dev libsasl2-dev graphviz && apt-get clean
 RUN pip install --no-cache-dir gunicorn django-auth-ldap whitenoise
 
 WORKDIR /opt
 
-ARG BRANCH=v2.7.3
+ARG BRANCH=v2.7.8
 ARG URL=https://github.com/digitalocean/netbox/archive/$BRANCH.tar.gz
 RUN wget -q -O - "${URL}" | tar xz \
   && mv netbox* netbox
